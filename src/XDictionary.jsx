@@ -12,6 +12,12 @@ function XDictionary() {
   const [found, setFound] = useState(null); // null: no search yet, true: found, false: not found
 
   const handleSearch = () => {
+    if (!searchTerm.trim()) {
+      setFound(false);
+      setDefinition('');
+      return;
+    }
+
     const result = dictionary.find(
       item => item.word.toLowerCase() === searchTerm.trim().toLowerCase()
     );
@@ -38,15 +44,10 @@ function XDictionary() {
       <button onClick={handleSearch}>Search</button>
 
       <div style={{ marginTop: '20px' }}>
-        {found === true && (
-          <>
-            <h3>Definition:</h3>
-            <p>{definition}</p>
-          </>
-        )}
-        {found === false && (
-          <p>Word not found in the dictionary.</p>
-        )}
+        <h3>Definition:</h3>
+        {found === true && <p>{definition}</p>}
+        {found === false && <p>Word not found in the dictionary.</p>}
+        {found === null && <p>Please enter a word and click search.</p>}
       </div>
     </div>
   );
